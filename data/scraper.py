@@ -223,8 +223,9 @@ def analyze_with_ai(top_signals: list[dict], openrouter_key: str | None, pillar_
             "implications_365d": "Fundamental restructure of software engineering and research economics."
        }
 
-    prompt = f"""You are the Strategic Intelligence Analyst (Data Product Manager).
-Given the following top {len(top_signals)} signals derived from GitHub, arXiv, and Hugging Face, produce an executive decision brief.
+    prompt = f"""You are a Strategic Human-Impact Analyst (Daily Life Forecaster).
+Given the following top {len(top_signals)} technical signals derived from GitHub, arXiv, and Hugging Face, produce an executive decision brief that acts as a helpful guide for a general audience.
+Focus heavily on the "Daily Life Impact" (how this affects human jobs, the economy, everyday apps, and society).
 
 SIGNALS:
 {json.dumps([{ 'pillar': s['pillar'], 'title': s['title'], 'summary': s['summary'], 'score': s['score_100'] } for s in top_signals], indent=2)}
@@ -232,11 +233,11 @@ SIGNALS:
 PILLAR TRENDS (7-day delta):
 {json.dumps(pillar_trends, indent=2)}
 
-Do not invent facts.
+Do not invent facts, but explain them simply as a helper.
 Identify:
-1. What changed?
-2. Why does it matter?
-3. What is the likely 30D / 90D / 365D implication?
+1. What changed in easy-to-understand terms?
+2. How does this progress realistically impact daily human life, jobs, or common tech?
+3. What is the likely 30D / 90D / 365D real-world implication for society?
 
 Return strict JSON only (no markdown blocks like ```json):
 {{
@@ -244,10 +245,10 @@ Return strict JSON only (no markdown blocks like ```json):
   "signal_velocity": "High" | "Medium" | "Low",
   "confidence": <integer 0-100>,
   "strategic_bias": "Positive" | "Neutral" | "Negative",
-  "executive_brief": "<2-sentence synthesis>",
-  "implications_30d": "<1 sentence>",
-  "implications_90d": "<1 sentence>",
-  "implications_365d": "<1 sentence>"
+  "executive_brief": "<3-4 sentence comprehensive synthesis focusing on real-world daily life impact. Be extremely helpful and clear!>",
+  "implications_30d": "<1-2 sentences on immediate daily life impact>",
+  "implications_90d": "<1-2 sentences on mid-term daily life impact>",
+  "implications_365d": "<1-2 sentences on long-term daily life impact>"
 }}
 """
     try:
@@ -255,7 +256,7 @@ Return strict JSON only (no markdown blocks like ```json):
             OPENROUTER_API,
             headers={"Authorization": f"Bearer {openrouter_key}", "Content-Type": "application/json"},
             json={
-                "model": "google/gemini-flash-1.5",
+                "model": "minimax/minimax-m3:free",
                 "messages": [{"role": "user", "content": prompt}],
                 "response_format": {"type": "json_object"}
             },
