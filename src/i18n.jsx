@@ -89,7 +89,6 @@ const AR = {
   'Contradicting Evidence': 'الأدلة المضادة',
   'Why It Matters': 'لماذا يهم؟',
   'Recommended Action': 'الإجراء الموصى به',
-  'Verified': 'مُحقق',
   'Partial': 'جزئي',
   'Unverified Claim': 'ادعاء لم يُتحقق منه',
 
