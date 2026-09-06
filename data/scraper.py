@@ -322,13 +322,30 @@ def run(output_dir: Path, target_date: str, github_token: str | None, openrouter
     history_path = output_dir / "historical_trends.json"
     prev_scores = dict(DEFAULT_SCORES)
     history = {"days": []}
+    
+    BASE_URL = "https://muxd22-alt.github.io/AGI_Track/data/"
+    
     if history_path.exists():
         try: history = json.loads(history_path.read_text())
         except: pass
+    else:
+        try:
+            resp = requests.get(BASE_URL + "historical_trends.json", timeout=10)
+            if resp.status_code == 200:
+                history = resp.json()
+        except: pass
+
     if latest_path.exists():
         try:
             prev = json.loads(latest_path.read_text())
             for p in PILLARS: prev_scores[p] = prev.get("pillars", {}).get(p, {}).get("score", DEFAULT_SCORES[p])
+        except: pass
+    else:
+        try:
+            resp = requests.get(BASE_URL + "latest_data.json", timeout=10)
+            if resp.status_code == 200:
+                prev = resp.json()
+                for p in PILLARS: prev_scores[p] = prev.get("pillars", {}).get(p, {}).get("score", DEFAULT_SCORES[p])
         except: pass
 
     days = [d for d in history.get("days", []) if d.get("date") != target_date]

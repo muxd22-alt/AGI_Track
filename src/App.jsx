@@ -214,8 +214,7 @@ function CompositeIndex({ composite, kpis }) {
 export default function App() {
   const { data: latest, error: latestError, loading: latestLoading } = useJson('data/latest_data.json')
   const { data: trends } = useJson('data/historical_trends.json')
-  const [activePillar, setActivePillar] = useState('math_proofs')
-  const { dir, isArabic } = useI18n()
+  const [activeTab, setActiveTab] = useState('executive')
 
   const heatmapPillars = ['scientific_rd', 'math_proofs', 'software_systems'].map((key) => ({
     key,
@@ -225,29 +224,48 @@ export default function App() {
   }))
 
   const breakthroughByPillar = (key) => latest?.top_signals?.find((b) => b.pillar === key)
+  const pillarSignals = (key) => latest?.top_signals?.filter((b) => b.pillar === key) || []
 
-  // Calculate total signals today across pillars
-  const totalSignalsToday = latest?.pillars
-    ? Object.entries(latest.pillars).reduce((acc, [k, p]) => {
-        if (k === 'daily_life_impact') return acc
-        return acc + (p.signal_count_today ?? 0)
-      }, 0)
-    : 1
-
-  // Leading pillar name
-  const leadingKey = latest?.pillars
-    ? Object.keys(latest.pillars).reduce((a, b) =>
-        (latest.pillars[a]?.delta_7d ?? 0) > (latest.pillars[b]?.delta_7d ?? 0) ? a : b
-      )
-    : 'software_systems'
-  const leadingPillarName = latest?.pillars?.[leadingKey]?.name ?? 'Vast Software Systems'
+  // Check if we are in a specific pillar tab
+  const activePillarData = activeTab !== 'executive' && latest?.pillars?.[activeTab] ? latest.pillars[activeTab] : null
 
   return (
     <div className={`min-h-screen bg-graphite-950 bg-grid ${isArabic ? "font-['Thmanyah_Sans']" : ''}`} dir={dir}>
       <Header generatedAt={latest?.generated_at} isDemo={latest?.status === 'demo'} />
 
+      {latest && (
+        <nav className="border-b border-graphite-800 bg-graphite-950/80 backdrop-blur top-0 sticky z-40 overflow-x-auto hide-scrollbar">
+          <div className="mx-auto flex max-w-6xl items-center gap-2 px-6">
+            <button
+              onClick={() => setActiveTab('executive')}
+              className={`whitespace-nowrap border-b-2 px-4 py-3 font-mono text-[13px] transition-colors ${
+                activeTab === 'executive'
+                  ? 'border-signal-amber font-semibold text-signal-amber'
+                  : 'border-transparent text-paper-500 hover:border-paper-600 hover:text-paper-300'
+              }`}
+            >
+              {t('Forecast & Daily Life Impact')}
+            </button>
+            {Object.keys(PILLAR_META).map((key) => (
+              <button
+                key={key}
+                onClick={() => setActiveTab(key)}
+                className={`whitespace-nowrap flex items-center gap-2 border-b-2 px-4 py-3 font-mono text-[13px] transition-colors ${
+                  activeTab === key
+                    ? 'font-semibold'
+                    : 'border-transparent text-paper-500 hover:border-paper-600 hover:text-paper-300'
+                }`}
+                style={activeTab === key ? { borderColor: PILLAR_META[key].accent, color: PILLAR_META[key].accent } : {}}
+              >
+                {t(PILLAR_META[key].shortLabel)}
+              </button>
+            ))}
+          </div>
+        </nav>
+      )}
+
       <main className="mx-auto max-w-6xl px-6 py-8">
-        {latestLoading && <p className="text-sm text-paper-500 font-mono">Loading latest signals…</p>}
+        {latestLoading && <p className="text-sm font-mono text-paper-500">Loading latest signals…</p>}
 
         {latestError && (
           <div className="border border-signal-rose/40 bg-signal-rose/5 px-5 py-4 text-sm text-signal-rose">
@@ -257,7 +275,7 @@ export default function App() {
           </div>
         )}
 
-        {latest && (
+        {latest && activeTab === 'executive' && (
           <div className="flex flex-col gap-10">
             {/* Executive Intelligence Overview */}
             <section className="flex flex-col gap-5">
@@ -273,43 +291,6 @@ export default function App() {
               />
             </section>
 
-            {/* Capability Pillars Grid */}
-            <section className="flex flex-col gap-5">
-              <SectionHeader icon={Layers} title="Pillar Capability Matrix" badge="0–100 Scores" />
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                {Object.entries(latest.pillars).map(([key, pillar]) => (
-                  <CapabilityCard
-                    key={key}
-                    icon={PILLAR_META[key]?.icon ?? Compass}
-                    accent={PILLAR_META[key]?.accent ?? '#C7C2B8'}
-                    pillar={pillar.name}
-                    score={pillar.score}
-                    deltaToday={pillar.delta_today}
-                    delta7d={pillar.delta_7d}
-                    summary={pillar.summary}
-                    everydayImpact={pillar.everyday_impact}
-                    breakthrough={breakthroughByPillar(key)}
-                  />
-                ))}
-              </div>
-            </section>
-
-            {/* Momentum & Velocity Analytics */}
-            {trends?.days && (
-              <section className="flex flex-col gap-5">
-                <SectionHeader icon={TrendingUp} title="Momentum & 90-Day Trajectory" badge="Trailing 90-Days" />
-                <div className="grid gap-4 xl:grid-cols-[1.1fr_1fr]">
-                  <HeatmapWidget
-                    history={trends.days}
-                    pillars={heatmapPillars}
-                    activePillar={activePillar}
-                    onChangePillar={setActivePillar}
-                  />
-                  <TrendChart history={trends.days} pillars={heatmapPillars} />
-                </div>
-              </section>
-            )}
-
             {/* Strategic Forecast Matrix */}
             {latest.strategic_forecast && (
               <section className="flex flex-col gap-5">
@@ -318,16 +299,75 @@ export default function App() {
               </section>
             )}
 
-            {/* Empirical Evidence & Verification Engine */}
+            {/* Capability Pillars Grid - Used as Quick Links from Executive View */}
             <section className="flex flex-col gap-5">
-              <SectionHeader icon={ShieldCheck} title="Empirical Evidence & Verification Engine" badge="Verifiable" />
-              <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-                {latest.top_signals && (
-                  <SignalFeed
-                    items={latest.top_signals}
-                    pillarAccents={Object.fromEntries(Object.entries(PILLAR_META).map(([k, v]) => [k, v.accent]))}
-                  />
+              <SectionHeader icon={Layers} title="Pillar Capability Matrix" badge="0–100 Scores" />
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                {Object.entries(latest.pillars).map(([key, pillar]) => (
+                  <div key={key} onClick={() => setActiveTab(key)} className="cursor-pointer group hover:scale-[1.01] transition-transform">
+                    <CapabilityCard
+                      icon={PILLAR_META[key]?.icon ?? Compass}
+                      accent={PILLAR_META[key]?.accent ?? '#C7C2B8'}
+                      pillar={pillar.name}
+                      score={pillar.score}
+                      deltaToday={pillar.delta_today}
+                      delta7d={pillar.delta_7d}
+                      summary={key === 'software_systems' ? 'Monitor systems that can code...' : 'Focus here on...'}
+                      breakthrough={breakthroughByPillar(key)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
+
+        {latest && activePillarData && (
+          <div className="flex flex-col gap-10">
+            <section className="flex flex-col gap-5">
+              <SectionHeader icon={PILLAR_META[activeTab].icon} title={activePillarData.name} badge="Pillar Deep Dive" />
+              <div className="grid gap-6 md:grid-cols-2">
+                <CapabilityCard
+                  icon={PILLAR_META[activeTab].icon}
+                  accent={PILLAR_META[activeTab].accent}
+                  pillar={activePillarData.name}
+                  score={activePillarData.score}
+                  deltaToday={activePillarData.delta_today}
+                  delta7d={activePillarData.delta_7d}
+                />
+                
+                {/* Visual Analytics space dedicated for this pillar */}
+                {trends?.days && (
+                  <div className="flex h-full flex-col justify-center border border-graphite-600 bg-graphite-900/60 p-5">
+                    <h4 className="font-mono text-[11px] text-paper-500 uppercase tracking-widest">{t('Historical Momentum')}</h4>
+                    <div className="mt-4 flex-1 min-h-[140px]">
+                       {/* Filtering the charts to only show active pillar */}
+                       <HeatmapWidget
+                          history={trends.days}
+                          pillars={[heatmapPillars.find(p => p.key === activeTab)]}
+                          activePillar={activeTab}
+                       />
+                    </div>
+                  </div>
                 )}
+              </div>
+            </section>
+
+            <section className="flex flex-col gap-5">
+              <SectionHeader icon={ShieldCheck} title={`Signals for ${activePillarData.name}`} badge={`${pillarSignals(activeTab).length} Signals`} />
+              <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+                {pillarSignals(activeTab).length > 0 ? (
+                  <SignalFeed
+                    items={pillarSignals(activeTab)}
+                    pillarAccents={{ [activeTab]: PILLAR_META[activeTab].accent }}
+                  />
+                ) : (
+                  <div className="border border-graphite-700 bg-graphite-900/40 p-8 flex flex-col items-center justify-center text-center">
+                    <CircleDashed size={32} className="text-paper-600 mb-4" />
+                    <p className="font-mono text-sm text-paper-400">{t('No new critical signals detected for this pillar today.')}</p>
+                  </div>
+                )}
+                
                 <VerifyPalette />
               </div>
             </section>
