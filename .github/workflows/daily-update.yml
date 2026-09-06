@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 0 * * *'   # midnight UTC every day
   workflow_dispatch:       # also run manually from the Actions tab
+  push:
+    branches:
+      - main
 
 jobs:
   update-data:
