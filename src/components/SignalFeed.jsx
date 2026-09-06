@@ -22,8 +22,8 @@ function SignalItem({ item, accent }) {
   useEffect(() => {
     if (isArabic) {
       if (item.topic) translateDynamic(item.topic).then(setTrTopic)
-      if (item.analysis?.why_it_matters) translateDynamic(item.analysis.why_it_matters).then(setTrWhy)
-      if (item.analysis?.recommended_action) translateDynamic(item.analysis.recommended_action).then(setTrAction)
+      if (item.why_it_matters) translateDynamic(item.why_it_matters).then(setTrWhy)
+      if (item.recommended_action) translateDynamic(item.recommended_action).then(setTrAction)
     }
   }, [isArabic, item, translateDynamic])
 
@@ -56,13 +56,13 @@ function SignalItem({ item, accent }) {
         <div>
           <dt className="font-mono text-[10px] uppercase tracking-wide text-paper-500">{t('Why It Matters')}</dt>
           <dd className="mt-1 text-sm text-paper-300">
-            {isArabic ? (trWhy || item.analysis?.why_it_matters) : item.analysis?.why_it_matters}
+            {isArabic ? (trWhy || item.why_it_matters) : item.why_it_matters}
           </dd>
         </div>
         <div>
           <dt className="font-mono text-[10px] uppercase tracking-wide text-paper-500">{t('Recommended Action')}</dt>
           <dd className="mt-1 text-sm text-paper-300">
-            {isArabic ? (trAction || item.analysis?.recommended_action) : item.analysis?.recommended_action}
+            {isArabic ? (trAction || item.recommended_action) : item.recommended_action}
           </dd>
         </div>
       </dl>
