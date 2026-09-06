@@ -13,7 +13,8 @@ import {
   TrendingUp,
   Target,
   ShieldCheck,
-  Zap
+  Zap,
+  CircleDashed
 } from 'lucide-react'
 import { useI18n } from './i18n.jsx'
 import Header from './components/Header.jsx'
@@ -212,6 +213,7 @@ function CompositeIndex({ composite, kpis }) {
 }
 
 export default function App() {
+  const { t, isArabic, dir } = useI18n()
   const { data: latest, error: latestError, loading: latestLoading } = useJson('data/latest_data.json')
   const { data: trends } = useJson('data/historical_trends.json')
   const [activeTab, setActiveTab] = useState('executive')
