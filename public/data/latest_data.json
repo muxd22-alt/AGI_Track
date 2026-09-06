@@ -1,15 +1,17 @@
 {
-  "generated_at": "2026-09-06T13:16:16Z",
+  "generated_at": "2026-09-06T14:43:57Z",
   "status": "live",
+  "curation_protocol": "Data Product Manager & BI Analyst Protocol v1.0",
+  "executive_summary": "AGI capability momentum is currently led by Vast Software Systems. Across tracked sources, 27 new technical signals were detected today.",
   "composite_index": {
-    "score": 42.6,
-    "delta_7d": 1.4,
-    "label": "Momentum currently led by Formal Mathematical Proofs"
+    "score": 43.9,
+    "delta_7d": 1.3,
+    "label": "Momentum currently led by Vast Software Systems"
   },
   "pillars": {
     "scientific_rd": {
       "name": "Autonomous Scientific R&D",
-      "score": 38.6,
+      "score": 40.6,
       "delta_today": 2.0,
       "delta_7d": 5,
       "summary": "8 new scientific rd signal(s) detected today across tracked sources.",
@@ -17,15 +19,15 @@
     },
     "math_proofs": {
       "name": "Formal Mathematical Proofs",
-      "score": 47.8,
-      "delta_today": 1.27,
-      "delta_7d": 9,
-      "summary": "12 new math proofs signal(s) detected today across tracked sources.",
+      "score": 48.8,
+      "delta_today": 1.04,
+      "delta_7d": 8,
+      "summary": "11 new math proofs signal(s) detected today across tracked sources.",
       "everyday_impact": "When auto-formalization tools reliably translate informal proofs into Lean without expert supervision, expect formal verification to become a standard CI step for safety-critical code, not a specialist niche."
     },
     "software_systems": {
       "name": "Vast Software Systems",
-      "score": 41.5,
+      "score": 42.4,
       "delta_today": 0.87,
       "delta_7d": 9,
       "summary": "8 new software systems signal(s) detected today across tracked sources.",
@@ -49,8 +51,8 @@
       "verification_status": "pending",
       "evidence_level": "Unverified Claim",
       "core_innovation": "Multi-agent AI science ecosystems rely on agents possessing tools that allow them to communicate, coordinate, and build on each other's work. Yet this shared infrastructure can also introduce vulnerabilities by creating a substrate for the contagious spread of unintended and undesirable behaviors. We report a case study on a research collective of 100 autonomous LLM agents tasked with proving form",
-      "what_it_means": "When autonomous agents routinely appear as listed co-authors on peer-reviewed papers, expect literature-review and first-draft-hypothesis work to shift toward human verification rather than human generation.",
-      "how_to_verify": "Open the arXiv listing and check the methods section and author affiliations."
+      "what_it_means": "Multi-agent research swarms accelerate scientific literature synthesis, shifting human researchers to high-level peer review.",
+      "how_to_verify": "Open the arXiv listing and verify the experimental methodology and author affiliations."
     },
     {
       "pillar": "math_proofs",
@@ -61,8 +63,8 @@
       "verification_status": "verified",
       "evidence_level": "Working Code Repo",
       "core_innovation": "chore(scripts): update nolints.json (#43474)",
-      "what_it_means": "When auto-formalization tools reliably translate informal proofs into Lean without expert supervision, expect formal verification to become a standard CI step for safety-critical code, not a specialist niche.",
-      "how_to_verify": "Clone the repo, checkout this commit, and run `lake build` to confirm the kernel accepts it."
+      "what_it_means": "Formal verification of mathematical proofs reduces edge-case vulnerabilities in safety-critical software systems.",
+      "how_to_verify": "Clone the repository, checkout this commit hash, and run `lake build` to verify Lean 4 kernel acceptance."
     },
     {
       "pillar": "software_systems",
@@ -73,13 +75,13 @@
       "verification_status": "pending",
       "evidence_level": "Unverified Claim",
       "core_innovation": "Evaluating LLM agents is essential for guiding their development, yet it has grown prohibitively expensive: a single pass of a frontier model over an agentic benchmark can cost hundreds to thousands of dollars, a price paid repeatedly across iterative development cycles. Prior efforts, centered on benchmark distillation, reduce the number of evaluation tasks but leave the cost of executing each re",
-      "what_it_means": "When agent PR merge rates on real-world repos approach human baselines on SWE-bench Verified, expect junior-engineer hiring to tilt further toward review and system-design skills over greenfield implementation.",
-      "how_to_verify": "Open the arXiv listing and check the methods section and author affiliations."
+      "what_it_means": "Benchmark improvements for coding agents signal a transition from copilot autocomplete to autonomous PR resolutions.",
+      "how_to_verify": "Open the arXiv listing and verify the experimental methodology and author affiliations."
     }
   ],
   "forecast": {
     "30_days": {
-      "milestone": "Continued near-term movement expected in Formal Mathematical Proofs, the pillar with the strongest 7-day trend.",
+      "milestone": "Continued near-term movement expected in Vast Software Systems, the pillar with the strongest 7-day trend.",
       "impact_index": "Critical"
     },
     "90_days": {
