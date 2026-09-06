@@ -286,21 +286,36 @@ def build_breakthrough(pillar: str, arxiv_items, hf_items, gh_repos, gh_commits)
         text = (text or "").lower()
         return any(k in text for k in keywords)
 
-    # math_proofs gets first crack at a directly-verifiable GitHub commit —
-    # code you can `lake build` yourself beats any unverified claim.
+    def generate_human_impact(pillar: str, title: str, summary: str) -> str:
+        t_lower = (title + " " + summary).lower()
+        if pillar == "scientific_rd":
+            if "multi-agent" in t_lower or "swarm" in t_lower:
+                return "Multi-agent research swarms accelerate scientific literature synthesis, shifting human researchers to high-level peer review."
+            return "Autonomous research tools shorten discovery cycles, shifting initial hypothesis drafting toward AI-assisted generation."
+        elif pillar == "math_proofs":
+            if "autoformalization" in t_lower or "lean" in t_lower:
+                return "Auto-formalization bridges informal math and Lean code, bringing zero-defect software verification closer to mainstream adoption."
+            return "Formal verification of mathematical proofs reduces edge-case vulnerabilities in safety-critical software systems."
+        elif pillar == "software_systems":
+            if "swe-bench" in t_lower or "eval" in t_lower:
+                return "Benchmark improvements for coding agents signal a transition from copilot autocomplete to autonomous PR resolutions."
+            return "Autonomous software engineering agents take on routine refactoring and bug fixes, elevating developer focus to high-level architecture."
+        return EVERYDAY_IMPACT.get(pillar, "")
+
     if pillar == "math_proofs" and gh_commits:
         c = gh_commits[0]
+        msg = c["commit"]["message"].splitlines()[0]
         return {
             "pillar": pillar,
-            "title": c["commit"]["message"].splitlines()[0][:140],
+            "title": msg[:140],
             "impact": "New commit activity in a core formal-verification repository.",
             "source_url": c["html_url"],
             "commit_hash_or_arxiv_id": c["sha"][:12],
             "verification_status": "verified",
             "evidence_level": "Working Code Repo",
-            "core_innovation": c["commit"]["message"].splitlines()[0][:280],
-            "what_it_means": EVERYDAY_IMPACT[pillar],
-            "how_to_verify": "Clone the repo, checkout this commit, and run `lake build` to confirm the kernel accepts it.",
+            "core_innovation": msg[:280],
+            "what_it_means": generate_human_impact(pillar, msg, ""),
+            "how_to_verify": "Clone the repository, checkout this commit hash, and run `lake build` to verify Lean 4 kernel acceptance.",
         }
 
     for paper in arxiv_items:
@@ -314,8 +329,8 @@ def build_breakthrough(pillar: str, arxiv_items, hf_items, gh_repos, gh_commits)
                 "verification_status": "pending",
                 "evidence_level": "Unverified Claim",
                 "core_innovation": paper["summary"][:400],
-                "what_it_means": EVERYDAY_IMPACT[pillar],
-                "how_to_verify": "Open the arXiv listing and check the methods section and author affiliations.",
+                "what_it_means": generate_human_impact(pillar, paper["title"], paper["summary"]),
+                "how_to_verify": "Open the arXiv listing and verify the experimental methodology and author affiliations.",
             }
 
     for paper in hf_items:
@@ -329,23 +344,24 @@ def build_breakthrough(pillar: str, arxiv_items, hf_items, gh_repos, gh_commits)
                 "verification_status": "pending",
                 "evidence_level": "Unverified Claim",
                 "core_innovation": (paper["summary"] or "")[:400],
-                "what_it_means": EVERYDAY_IMPACT[pillar],
-                "how_to_verify": "Check the paper's Hugging Face page for linked code or model weights and try reproducing its headline result.",
+                "what_it_means": generate_human_impact(pillar, paper["title"], paper["summary"]),
+                "how_to_verify": "Inspect the paper's Hugging Face page for open-source model weights or code repositories.",
             }
 
     if gh_repos:
         r = gh_repos[0]
+        desc = r.get("description") or ""
         return {
             "pillar": pillar,
             "title": f"Repository activity: {r['full_name']}",
-            "impact": r.get("description") or "Recently updated repository matching this pillar's tracked topics.",
+            "impact": desc or "Recently updated repository matching this pillar's tracked topics.",
             "source_url": r["html_url"],
             "commit_hash_or_arxiv_id": "n/a",
             "verification_status": "pending",
             "evidence_level": "Working Code Repo",
-            "core_innovation": r.get("description") or "See repository README for details.",
-            "what_it_means": EVERYDAY_IMPACT[pillar],
-            "how_to_verify": "Clone the repository and check its test suite, CI status, and recent commit history.",
+            "core_innovation": desc or "See repository README for details.",
+            "what_it_means": generate_human_impact(pillar, r['full_name'], desc),
+            "how_to_verify": "Clone the repository and inspect its test suite, CI status, and commit log.",
         }
 
     return None
@@ -483,6 +499,8 @@ def run(output_dir: Path, target_date: str, github_token: str | None, dry_run: b
     latest_data = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "status": "dry-run" if dry_run else "live",
+        "curation_protocol": "Data Product Manager & BI Analyst Protocol v1.0",
+        "executive_summary": f"AGI capability momentum is currently led by {PILLAR_NAMES[leader]}. Across tracked sources, {sum(todays_counts.values())} new technical signals were detected today.",
         "composite_index": {
             "score": composite_score,
             "delta_7d": composite_delta_7d,

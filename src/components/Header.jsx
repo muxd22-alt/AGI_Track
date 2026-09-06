@@ -1,5 +1,5 @@
 import { Radar, Languages } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useI18n } from '../i18n.jsx'
 
 function formatTimestamp(iso) {
   try {
@@ -18,29 +18,7 @@ function formatTimestamp(iso) {
 }
 
 export default function Header({ generatedAt, isDemo }) {
-  const [isArabic, setIsArabic] = useState(false);
-
-  useEffect(() => {
-    if (document.cookie.includes('googtrans=/en/ar') || document.cookie.includes('googtrans=%2Fen%2Far')) {
-      setIsArabic(true);
-    }
-  }, []);
-
-  const toggleTranslation = () => {
-    if (isArabic) {
-      document.cookie = `googtrans=/en/en; path=/;`;
-      if (window.location.hostname !== 'localhost') {
-        document.cookie = `googtrans=/en/en; domain=${window.location.hostname}; path=/;`;
-      }
-      window.location.reload();
-    } else {
-      document.cookie = `googtrans=/en/ar; path=/;`;
-      if (window.location.hostname !== 'localhost') {
-        document.cookie = `googtrans=/en/ar; domain=${window.location.hostname}; path=/;`;
-      }
-      window.location.reload();
-    }
-  };
+  const { t, isArabic, toggleLang } = useI18n()
 
   return (
     <header className="border-b border-graphite-700">
@@ -48,32 +26,37 @@ export default function Header({ generatedAt, isDemo }) {
         <div className="flex items-center gap-3">
           <Radar size={22} strokeWidth={1.75} className="text-signal-amber" />
           <div>
-            <h1 className="text-lg font-semibold leading-none text-paper-100">AGI Horizon Tracker</h1>
-            <p className="mt-1.5 text-xs text-paper-500">Source-grounded signals across three frontier capability pillars</p>
+            <h1 className="text-lg font-semibold leading-none text-paper-100">
+              {t('AGI Horizon Tracker')}
+            </h1>
+            <p className="mt-1.5 text-xs text-paper-500">
+              {t('Source-grounded signals across three frontier capability pillars')}
+            </p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 font-mono text-xs text-paper-500">
+        <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-paper-500">
           {isDemo && (
-            <span className="border border-signal-amber/40 px-2 py-1 text-signal-amber">Demo data</span>
+            <span className="border border-signal-amber/40 px-2 py-1 text-signal-amber">
+              {t('Demo data')}
+            </span>
           )}
           <span className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-blink rounded-full bg-signal-amber" />
             </span>
-            Updated {formatTimestamp(generatedAt)}
+            {t('Updated')} {formatTimestamp(generatedAt)}
           </span>
           <button
-            onClick={toggleTranslation}
-            className="flex items-center gap-1.5 rounded-full border border-graphite-600 bg-graphite-800 px-3 py-1.5 text-paper-300 transition-colors hover:border-paper-500 hover:text-paper-100"
-            title={isArabic ? "Switch to English" : "ترجم إلى العربية"}
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 rounded-full border border-graphite-600 bg-graphite-800/80 px-3 py-1.5 text-paper-300 backdrop-blur transition-all hover:border-signal-amber/50 hover:text-paper-100 hover:shadow-[0_0_12px_rgba(245,166,35,0.15)]"
+            title={isArabic ? 'Switch to English' : 'ترجم إلى العربية'}
           >
             <Languages size={14} />
-            <span className="hidden sm:inline">{isArabic ? "English" : "العربية"}</span>
+            <span>{isArabic ? 'EN' : 'ع'}</span>
           </button>
         </div>
       </div>
     </header>
   )
 }
-
