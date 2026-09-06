@@ -1,69 +1,51 @@
 # AGI Horizon Tracker
 
-A self-updating dashboard that aggregates daily research signals from GitHub, Hugging Face, and arXiv across three frontier AI capability pillars — Autonomous Scientific R&D, Formal Mathematical Proofs, and Vast Software Systems — and translates them into plain-language forecasts.
+A live, self-updating dashboard that aggregates daily research signals from GitHub, Hugging Face, and arXiv across three frontier AI capability pillars — **Autonomous Scientific R&D**, **Formal Mathematical Proofs**, and **Vast Software Systems** — and translates them into plain-language forecasts.
 
 Every data point links back to its primary source. Nothing here is taken on faith.
 
 ---
 
-## Quick start (local preview)
+## Why this matters
 
-```bash
-npm install
-npm run dev          # http://localhost:5173
-```
+The AI industry is full of speculative roadmaps and hype. The **AGI Horizon Tracker** cuts through the noise by focusing exclusively on **empirical momentum**. 
 
-The placeholder data in `public/data/` ships with the repo so the dashboard is fully browsable before the scraper has run.
+Instead of tracking product announcements, it tracks the leading indicators of structural change:
+* **Autonomous Scientific R&D:** Tracking when autonomous agents transition from experimental toys to routine co-authors on peer-reviewed papers.
+* **Formal Mathematical Proofs:** Tracking the velocity of auto-formalization tools translating informal proofs, signaling a shift in safety-critical code verification.
+* **Vast Software Systems:** Tracking autonomous coding agent PR merge rates against real-world benchmarks like SWE-bench.
 
----
+By synthesizing these three highly technical pillars, the dashboard provides a grounded, data-driven forecast of how close we are to structural shifts in the labor market and research workflows.
 
-## How the pipeline works
+## Verifiable and Transparent
 
-```
+There is no "black box" model generating these scores. The composite horizon index and pillar scores are driven by a transparent momentum heuristic evaluating the volume of primary-source evidence (commits, whitepapers, leaderboard upvotes) published each day.
+
+Every breakthrough featured on the tracker includes:
+- **Direct Source Links:** Straight to the arXiv preprint, GitHub commit, or Hugging Face paper.
+- **Verification Instructions:** Explicit steps on how to reproduce or verify the claim yourself (e.g., pulling a commit and running tests).
+
+## How the architecture works (Zero Maintenance)
+
+The entire tracker functions as a fully automated, headless application running on GitHub's infrastructure forever for free.
+
+```text
 data/scraper.py
     → public/data/latest_data.json          (current scores + breakthroughs)
     → public/data/historical_trends.json    (trailing 90-day signal counts)
-
-.github/workflows/daily-update.yml  — runs the scraper at midnight UTC and commits the JSON
-.github/workflows/deploy.yml        — builds and deploys the React app to GitHub Pages on every push to main
 ```
 
-The scraper is pure Python with a single `requests` dependency and zero external services. Each API source is wrapped in its own `try/except` so one upstream outage doesn't abort the whole run.
+1. **Daily Signal Ingestion:** `data/scraper.py` runs autonomously every midnight UTC via GitHub Actions (`daily-update.yml`). It queries the APIs (saving state across runs) and calculates the new momentum scores.
+2. **Atomic Data Updates:** The pipeline commits the new data directly to the `main` branch.
+3. **Automated Deployment:** Committing the fresh data triggers the `deploy.yml` workflow, rebuilding the Vite/React application and pushing a live update to GitHub Pages.
 
----
-
-## Deploy to GitHub Pages (5 steps)
-
-1. **Push this repo** to `github.com/<your-username>/AGI_Track` (or your fork of it).
-
-2. **Enable Pages** → Settings → Pages → Source: **GitHub Actions**.
-
-3. **Enable write permissions** for Actions → Settings → Actions → General → Workflow permissions → **Read and write permissions** → Save. This lets the daily-update workflow commit the refreshed JSON back to the repo.
-
-4. **Trigger the first deploy** → Actions → "Deploy to GitHub Pages" → Run workflow. Your live URL will be `https://<your-username>.github.io/AGI_Track/`.
-
-5. **Trigger the first data run** → Actions → "Daily AGI Signal Update" → Run workflow. From then on it runs automatically at midnight UTC.
-
----
-
-## Test the scraper locally
-
-```bash
-# Dry run — uses built-in fixtures, zero network calls
-python data/scraper.py --dry-run
-
-# Live run — needs a GITHUB_TOKEN env var for better rate limits
-export GITHUB_TOKEN=ghp_...
-python data/scraper.py
-```
-
----
+Each API source is wrapped in its own resilient `try/except` handler — meaning one upstream outage never aborts the whole run and the application stays continuously live.
 
 ## Project structure
 
-```
+```text
 ├── data/
-│   └── scraper.py                  Python data pipeline
+│   └── scraper.py                  Python data pipeline & heuristic engine
 ├── public/
 │   ├── data/
 │   │   ├── latest_data.json        Runtime data (overwritten nightly)
@@ -71,31 +53,16 @@ python data/scraper.py
 │   └── favicon.svg
 ├── src/
 │   ├── App.jsx                     Main dashboard layout
-│   ├── index.css
-│   ├── main.jsx
-│   └── components/
-│       ├── CapabilityCard.jsx      Four pillar cards
-│       ├── ForecastMatrix.jsx      30/90/365-day forecast table
-│       ├── Header.jsx
-│       ├── Footer.jsx
-│       ├── HeatmapWidget.jsx       GitHub-style 90-day calendar heatmap
-│       ├── SignalFeed.jsx          Full-detail breakthrough feed
-│       ├── TrendChart.jsx          Multi-line Recharts comparison
-│       └── VerifyPalette.jsx       Copyable shell verification commands
+│   └── components/                 Capability Cards, Heatmaps, Trend Charts, etc.
 ├── .github/workflows/
-│   ├── daily-update.yml            Scraper cron
-│   └── deploy.yml                  GitHub Pages deploy
-├── index.html
-├── vite.config.js
-├── tailwind.config.js
-└── package.json
+│   ├── daily-update.yml            Scraper cron & auto-commit pipeline
+│   └── deploy.yml                  GitHub Pages deployment
+└── index.html                      Vite entry point
 ```
-
----
 
 ## Data schema
 
-`latest_data.json` schema every item in `breakthroughs` must satisfy (enforced by the scraper):
+The `latest_data.json` schema enforces a strict structure for every featured breakthrough:
 
 ```json
 {
@@ -103,8 +70,9 @@ python data/scraper.py
   "impact": "...",
   "source_url": "...",
   "commit_hash_or_arxiv_id": "...",
-  "verification_status": "verified | pending"
+  "verification_status": "verified | pending",
+  "evidence_level": "..."
 }
 ```
 
-Scores are a transparent momentum heuristic (see `data/scraper.py → update_score()`) — not a model prediction. The formula is auditable from the source file alone.
+Scores represent momentum against a historical baseline (calculated by `update_score()` in the scraper) — not an AI's prediction. The formula remains entirely auditable.
