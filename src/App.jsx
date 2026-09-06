@@ -29,8 +29,7 @@ import VerifyPalette from './components/VerifyPalette.jsx'
 const PILLAR_META = {
   scientific_rd: { icon: FlaskConical, accent: '#9A8CFF', shortLabel: 'Sci R&D', unit: 'papers' },
   math_proofs: { icon: Sigma, accent: '#4FD1C5', shortLabel: 'Math', unit: 'commits' },
-  software_systems: { icon: Cpu, accent: '#F5A623', shortLabel: 'Software', unit: 'PRs' },
-  daily_life_impact: { icon: Compass, accent: '#C7C2B8', shortLabel: 'Impact', unit: 'signals' }
+  software_systems: { icon: Cpu, accent: '#F5A623', shortLabel: 'Software', unit: 'PRs' }
 }
 
 const BASE = import.meta.env.BASE_URL
