@@ -9,8 +9,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+        // Handle font/layout adjustments if cookie says Arabic
+        if (document.cookie.includes('googtrans=/en/ar') || document.cookie.includes('googtrans=%2Fen%2Far')) {
+          document.documentElement.dir = 'rtl';
+          document.documentElement.lang = 'ar';
+          document.documentElement.classList.add('font-arabic');
+        }
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+      /* Hide the messy Google Translate toolbar and tooltips */
+      .goog-te-banner-frame { display: none !important; }
+      body { top: 0px !important; }
+      .goog-tooltip { display: none !important; }
+      .goog-tooltip:hover { display: none !important; }
+      .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; border-bottom: none !important; }
+      #google_translate_element { display: none !important; }
+    </style>
   </head>
   <body>
+    <div id="google_translate_element"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
