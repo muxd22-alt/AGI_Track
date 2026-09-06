@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-06T14:54:50Z",
+  "generated_at": "2026-09-06T14:58:51Z",
   "status": "live",
   "curation_protocol": "Data Product Manager & BI Analyst Protocol v1.0",
   "executive_summary": "AGI capability momentum is currently led by Vast Software Systems. Across tracked sources, 27 new technical signals were detected today.",
   "composite_index": {
-    "score": 46.5,
+    "score": 47.8,
     "delta_7d": 1.3,
     "label": "Momentum currently led by Vast Software Systems"
   },
   "pillars": {
     "scientific_rd": {
       "name": "Autonomous Scientific R&D",
-      "score": 44.6,
+      "score": 46.6,
       "delta_today": 2.0,
       "delta_7d": 5,
       "summary": "8 new scientific rd signal(s) detected today across tracked sources.",
@@ -19,7 +19,7 @@
     },
     "math_proofs": {
       "name": "Formal Mathematical Proofs",
-      "score": 50.8,
+      "score": 51.8,
       "delta_today": 1.04,
       "delta_7d": 8,
       "summary": "11 new math proofs signal(s) detected today across tracked sources.",
@@ -27,7 +27,7 @@
     },
     "software_systems": {
       "name": "Vast Software Systems",
-      "score": 44.2,
+      "score": 45.1,
       "delta_today": 0.87,
       "delta_7d": 9,
       "summary": "8 new software systems signal(s) detected today across tracked sources.",
