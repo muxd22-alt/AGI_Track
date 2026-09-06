@@ -39,16 +39,54 @@ function useJson(path) {
 }
 
 function CompositeIndex({ composite }) {
+  const [translatedLabel, setTranslatedLabel] = useState(null);
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [showArabic, setShowArabic] = useState(false);
+
   if (!composite) return null
   const isUp = composite.delta_7d > 0
   const isFlat = Math.abs(composite.delta_7d) < 0.05
   const DeltaIcon = isFlat ? Minus : isUp ? ArrowUpRight : ArrowDownRight
 
+  const toggleTranslation = async () => {
+    if (showArabic) {
+      setShowArabic(false);
+      return;
+    }
+    if (translatedLabel) {
+      setShowArabic(true);
+      return;
+    }
+    
+    setIsTranslating(true);
+    try {
+      const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(composite.label)}&langpair=en|ar`);
+      const data = await res.json();
+      if (data?.responseData?.translatedText) {
+        setTranslatedLabel(data.responseData.translatedText);
+        setShowArabic(true);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    setIsTranslating(false);
+  };
+
   return (
     <div className="border border-graphite-600 bg-graphite-900/60 px-6 py-8 sm:px-8">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <span className="font-mono text-xs text-paper-500">Composite horizon index</span>
+          <div className="flex items-center gap-3">
+             <span className="font-mono text-xs text-paper-500">Composite horizon index</span>
+             <button
+               onClick={toggleTranslation}
+               className={`text-paper-500 hover:text-paper-100 transition-colors ${isTranslating ? 'animate-pulse' : ''}`}
+               title="Translate Daily Brief to Arabic"
+               aria-label="Translate Daily Brief to Arabic"
+             >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+             </button>
+          </div>
           <div className="mt-2 flex items-baseline gap-3">
             <span className="font-mono text-6xl font-medium tabular text-paper-100">{composite.score.toFixed(1)}</span>
             <span
@@ -60,7 +98,9 @@ function CompositeIndex({ composite }) {
               {Math.abs(composite.delta_7d).toFixed(1)} this week
             </span>
           </div>
-          <p className="mt-2 max-w-md text-sm text-paper-300">{composite.label}</p>
+          <p className={`mt-2 max-w-md text-sm text-paper-300 ${showArabic ? "font-['Thmanyah_Sans'] text-right" : ""}`} dir={showArabic ? "rtl" : "ltr"}>
+             {showArabic ? translatedLabel : composite.label}
+          </p>
         </div>
         <p className="max-w-sm text-xs leading-relaxed text-paper-500">
           Unweighted average of the three tracked pillars below, each scored 0–100 against its own historical
@@ -70,6 +110,7 @@ function CompositeIndex({ composite }) {
     </div>
   )
 }
+
 
 export default function App() {
   const { data: latest, error: latestError, loading: latestLoading } = useJson('data/latest_data.json')
