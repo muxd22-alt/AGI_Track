@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-09-06T13:07:15Z",
+  "generated_at": "2026-09-06T13:12:27Z",
   "status": "live",
   "composite_index": {
-    "score": 39.8,
+    "score": 41.2,
     "delta_7d": 1.4,
     "label": "Momentum currently led by Formal Mathematical Proofs"
   },
   "pillars": {
     "scientific_rd": {
       "name": "Autonomous Scientific R&D",
-      "score": 34.6,
+      "score": 36.6,
       "delta_today": 2.0,
       "delta_7d": 5,
       "summary": "8 new scientific rd signal(s) detected today across tracked sources.",
@@ -17,7 +17,7 @@
     },
     "math_proofs": {
       "name": "Formal Mathematical Proofs",
-      "score": 45.2,
+      "score": 46.5,
       "delta_today": 1.27,
       "delta_7d": 9,
       "summary": "12 new math proofs signal(s) detected today across tracked sources.",
@@ -25,7 +25,7 @@
     },
     "software_systems": {
       "name": "Vast Software Systems",
-      "score": 39.7,
+      "score": 40.6,
       "delta_today": 0.87,
       "delta_7d": 9,
       "summary": "8 new software systems signal(s) detected today across tracked sources.",
