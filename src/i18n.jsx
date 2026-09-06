@@ -58,9 +58,18 @@ const AR = {
   "Check a repo's recent commit activity": 'فحص نشاط الإيداعات الأخيرة في مستودع',
   'Run the SWE-bench evaluation harness': 'تشغيل إطار تقييم SWE-bench',
 
-  // Executive Summary
+  // Executive Summary & BI Badges
   'Executive Summary': 'الملخص التنفيذي',
   'Curation Protocol': 'بروتوكول التنسيق',
+  'Executive Intelligence Overview': 'نظرة عامة على الذكاء التنفيذي',
+  'Pillar Capability Matrix': 'مصفوفة قدرات المحاور الرئيسيّة',
+  'Momentum & 90-Day Trajectory': 'الزخم ومسار الـ ٩٠ يوماً',
+  'Strategic Forecast Horizon': 'أُفق التوقعات الاستراتيجية',
+  'Empirical Evidence & Verification Engine': 'محرّك الأدلة التجريبية والتحقق',
+  'Total Daily Signals': 'إجمالي الإشارات اليومية',
+  'Leading Pillar': 'المحور المتصدر',
+  'Data Confidence': 'درجة موثوقية البيانات',
+  'High (Source-Grounded)': 'عالية (مُوثّقة بالكامل)',
 
   // Footer
   'Data sources: GitHub REST API, Hugging Face Daily Papers, and the arXiv API. Every score and breakthrough on this page links back to a primary source — treat unlinked claims as unverified.': 'مصادر البيانات: واجهة GitHub، أوراق Hugging Face اليومية، وواجهة arXiv. كل درجة واكتشاف في هذه الصفحة مرتبط بمصدره الأصلي.',
