@@ -2,12 +2,6 @@
   "description": "Daily signal counts per pillar over the trailing 90 days. Generated as placeholder demo data \u2014 the daily-update workflow overwrites this file with real counts of commits, papers, and model releases.",
   "days": [
     {
-      "date": "2026-06-05",
-      "scientific_rd": 2,
-      "math_proofs": 4,
-      "software_systems": 3
-    },
-    {
       "date": "2026-06-06",
       "scientific_rd": 2,
       "math_proofs": 2,
@@ -540,6 +534,12 @@
       "scientific_rd": 1,
       "math_proofs": 7,
       "software_systems": 5
+    },
+    {
+      "date": "2026-09-06",
+      "scientific_rd": 8,
+      "math_proofs": 12,
+      "software_systems": 8
     }
   ]
 }
