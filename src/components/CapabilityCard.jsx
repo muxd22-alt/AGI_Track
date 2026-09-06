@@ -87,15 +87,21 @@ export default function CapabilityCard({
                 </span>
               )}
             </div>
-            <p className="mt-1.5 text-sm text-paper-100">{breakthrough.title}</p>
-            <a
-              href={breakthrough.source_url}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-2 inline-block break-all font-mono text-xs text-paper-500 underline decoration-graphite-500 underline-offset-2 hover:text-signal-cyan"
-            >
-              {breakthrough.source_url}
-            </a>
+            <p className="mt-1.5 text-sm text-paper-100">{breakthrough.topic || breakthrough.title}</p>
+            {breakthrough.supporting_evidence?.[0] ? (
+              <span className="mt-2 text-xs font-mono text-paper-500 break-all line-clamp-1 opacity-80">
+                {breakthrough.supporting_evidence[0]}
+              </span>
+            ) : breakthrough.source_url ? (
+              <a
+                href={breakthrough.source_url}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 inline-block break-all font-mono text-xs text-paper-500 underline decoration-graphite-500 underline-offset-2 hover:text-signal-cyan"
+              >
+                {t('View Source')}
+              </a>
+            ) : null}
           </div>
         )}
 

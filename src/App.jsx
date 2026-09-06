@@ -75,63 +75,93 @@ function SectionHeader({ icon: Icon, title, badge }) {
   )
 }
 
-function ExecutiveSummary({ summary, protocol }) {
+function ExecutiveCommandCenter({ decision, protocol, kpis }) {
   const { t, isArabic, translateDynamic } = useI18n()
-  const [translated, setTranslated] = useState(null)
-
+  const [translatedBrief, setTranslatedBrief] = useState(null)
+  
   useEffect(() => {
-    if (isArabic && summary) {
-      translateDynamic(summary).then(setTranslated)
+    if (isArabic && decision?.executive_brief) {
+      translateDynamic(decision.executive_brief).then(setTranslatedBrief)
     }
-  }, [isArabic, summary, translateDynamic])
+  }, [isArabic, decision?.executive_brief, translateDynamic])
 
-  if (!summary) return null
+  if (!decision) return null
 
   return (
-    <div className="relative overflow-hidden border border-signal-amber/30 bg-gradient-to-br from-signal-amber/[0.08] via-graphite-900/90 to-graphite-950 p-6 shadow-[0_0_30px_rgba(245,166,35,0.05)]">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(245,166,35,0.12),transparent_70%)]" />
-      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex items-start gap-4">
-          <div className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-signal-amber/30 bg-signal-amber/10 shadow-[0_0_15px_rgba(245,166,35,0.2)]">
-            <Sparkles size={18} className="text-signal-amber" />
-          </div>
-          <div>
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-signal-amber">
-                {t('Executive Summary')}
-              </span>
-              {protocol && (
-                <span className="rounded-full border border-graphite-700 bg-graphite-800/80 px-2.5 py-0.5 font-mono text-[10px] text-paper-400">
-                  {protocol}
-                </span>
-              )}
+    <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+      {/* Executive Brief Box */}
+      <div className="relative overflow-hidden border border-signal-amber/30 bg-gradient-to-br from-signal-amber/[0.08] via-graphite-900/90 to-graphite-950 p-6 shadow-[0_0_30px_rgba(245,166,35,0.05)]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(245,166,35,0.12),transparent_70%)]" />
+        <div className="relative flex flex-col gap-4">
+          <div className="flex items-start gap-4">
+            <div className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-signal-amber/30 bg-signal-amber/10 shadow-[0_0_15px_rgba(245,166,35,0.2)]">
+              <Sparkles size={18} className="text-signal-amber" />
             </div>
-            <p className="mt-2.5 text-base leading-relaxed font-medium text-paper-100">
-              {isArabic ? (translated || summary) : summary}
-            </p>
+            <div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-signal-amber">
+                  {t('Executive Brief')}
+                </span>
+                {protocol && (
+                  <span className="rounded-full border border-graphite-700 bg-graphite-800/80 px-2.5 py-0.5 font-mono text-[10px] text-paper-400">
+                    {protocol}
+                  </span>
+                )}
+                <span className="flex items-center gap-1 ml-auto rounded-full border border-signal-cyan/50 bg-signal-cyan/10 px-2.5 py-0.5 font-mono text-[10px] text-signal-cyan">
+                  <Cpu size={11} className="text-signal-cyan" />
+                  {t('OpenRouter Analytical Layer')}
+                </span>
+              </div>
+              <p className="mt-2.5 text-base leading-relaxed font-medium text-paper-100">
+                {isArabic ? (translatedBrief || decision.executive_brief) : decision.executive_brief}
+              </p>
+              <div className="mt-4 border-t border-signal-amber/20 pt-3 flex items-center justify-between text-xs text-paper-400">
+                 <span className="font-mono text-xs">{t('Daily AI Reasoner & Future Forecast Helper')}</span>
+                 <span className="font-mono opacity-60">Status: Active</span>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
+      
+      {/* Regime and Status Strip */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="border border-graphite-700 bg-graphite-900/40 p-4 flex flex-col items-start justify-center">
+          <span className="font-mono text-[11px] text-paper-500 mb-1">{t('Market / Intelligence Regime')}</span>
+          <span className="font-mono text-lg font-semibold text-signal-cyan">{decision.regime}</span>
+        </div>
+        <div className="border border-graphite-700 bg-graphite-900/40 p-4 flex flex-col items-start justify-center">
+          <span className="font-mono text-[11px] text-paper-500 mb-1">{t('Signal Velocity')}</span>
+          <span className="font-mono text-lg font-semibold text-paper-100">{decision.signal_velocity}</span>
+        </div>
+        <div className="border border-graphite-700 bg-graphite-900/40 p-4 flex flex-col items-start justify-center">
+          <span className="font-mono text-[11px] text-paper-500 mb-1">{t('Confidence')}</span>
+          <span className="font-mono text-lg font-semibold text-emerald-400">{decision.confidence}%</span>
+        </div>
+        <div className="border border-graphite-700 bg-graphite-900/40 p-4 flex flex-col items-start justify-center">
+          <span className="font-mono text-[11px] text-paper-500 mb-1">{t('Strategic Bias')}</span>
+          <span className="font-mono text-lg font-semibold text-signal-amber">{decision.strategic_bias}</span>
         </div>
       </div>
     </div>
   )
 }
 
-function CompositeIndex({ composite, totalSignals, leadingPillarName }) {
-  const { t, isArabic, translateDynamic } = useI18n()
-  const [translatedLabel, setTranslatedLabel] = useState(null)
-  const [translatedLeading, setTranslatedLeading] = useState(null)
-
-  useEffect(() => {
-    if (isArabic) {
-      if (composite?.label) translateDynamic(composite.label).then(setTranslatedLabel)
-      if (leadingPillarName) translateDynamic(leadingPillarName).then(setTranslatedLeading)
-    }
-  }, [isArabic, composite?.label, leadingPillarName, translateDynamic])
+function CompositeIndex({ composite, kpis }) {
+  const { t } = useI18n()
 
   if (!composite) return null
   const isUp = composite.delta_7d > 0
   const isFlat = Math.abs(composite.delta_7d) < 0.05
   const DeltaIcon = isFlat ? Minus : isUp ? ArrowUpRight : ArrowDownRight
+
+  const kpiLabels = {
+    'signal_coverage': 'Signal Coverage',
+    'source_diversity': 'Source Diversity',
+    'evidence_freshness': 'Evidence Freshness',
+    'duplicate_rate': 'Duplicate Rate',
+    'ai_agreement': 'AI Agreement',
+  }
 
   return (
     <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
@@ -160,9 +190,6 @@ function CompositeIndex({ composite, totalSignals, leadingPillarName }) {
               <span className="font-mono text-xs text-paper-500">7-Day Trajectory</span>
             </div>
           </div>
-          <p className="mt-3 text-sm text-paper-300 font-medium">
-            {isArabic ? (translatedLabel || composite.label) : composite.label}
-          </p>
         </div>
         <p className="mt-6 border-t border-graphite-800 pt-4 text-xs leading-relaxed text-paper-500">
           {t('Unweighted average of the three tracked pillars below, each scored 0–100 against its own historical baseline. A heuristic momentum gauge, not a forecast of arrival.')}
@@ -170,35 +197,16 @@ function CompositeIndex({ composite, totalSignals, leadingPillarName }) {
       </div>
 
       {/* BI KPI Strip */}
-      <div className="grid grid-rows-3 gap-3">
-        <div className="border border-graphite-700 bg-graphite-900/40 p-4 flex items-center justify-between">
-          <div>
-            <span className="font-mono text-[11px] text-paper-500 block">{t('Total Daily Signals')}</span>
-            <span className="font-mono text-2xl font-semibold text-paper-100">{totalSignals ?? '--'}</span>
-          </div>
-          <Activity size={20} className="text-signal-amber opacity-80" />
+      {kpis && (
+        <div className="grid grid-rows-5 gap-2">
+          {Object.entries(kpis).map(([key, val]) => (
+            <div key={key} className="border border-graphite-700 bg-graphite-900/40 px-4 py-2 flex items-center justify-between">
+              <span className="font-mono text-[11px] text-paper-500 uppercase">{t(kpiLabels[key] || key)}</span>
+              <span className="font-mono text-sm font-semibold text-paper-100">{val}</span>
+            </div>
+          ))}
         </div>
-
-        <div className="border border-graphite-700 bg-graphite-900/40 p-4 flex items-center justify-between">
-          <div>
-            <span className="font-mono text-[11px] text-paper-500 block">{t('Leading Pillar')}</span>
-            <span className="font-mono text-sm font-medium text-signal-cyan truncate max-w-[200px] block">
-              {isArabic ? (translatedLeading || leadingPillarName) : leadingPillarName}
-            </span>
-          </div>
-          <TrendingUp size={20} className="text-signal-cyan opacity-80" />
-        </div>
-
-        <div className="border border-graphite-700 bg-graphite-900/40 p-4 flex items-center justify-between">
-          <div>
-            <span className="font-mono text-[11px] text-paper-500 block">{t('Data Confidence')}</span>
-            <span className="font-mono text-xs font-semibold text-emerald-400">
-              {t('High (Source-Grounded)')}
-            </span>
-          </div>
-          <ShieldCheck size={20} className="text-emerald-400 opacity-80" />
-        </div>
-      </div>
+      )}
     </div>
   )
 }
@@ -216,16 +224,15 @@ export default function App() {
     unit: PILLAR_META[key].unit
   }))
 
-  const breakthroughByPillar = (key) => latest?.breakthroughs?.find((b) => b.pillar === key)
+  const breakthroughByPillar = (key) => latest?.top_signals?.find((b) => b.pillar === key)
 
   // Calculate total signals today across pillars
   const totalSignalsToday = latest?.pillars
     ? Object.entries(latest.pillars).reduce((acc, [k, p]) => {
         if (k === 'daily_life_impact') return acc
-        const match = p.summary?.match(/(\d+)\s+new/)
-        return acc + (match ? parseInt(match[1], 10) : 0)
+        return acc + (p.signal_count_today ?? 0)
       }, 0)
-    : 27
+    : 1
 
   // Leading pillar name
   const leadingKey = latest?.pillars
@@ -254,15 +261,15 @@ export default function App() {
           <div className="flex flex-col gap-10">
             {/* Executive Intelligence Overview */}
             <section className="flex flex-col gap-5">
-              <SectionHeader icon={Activity} title="Executive Intelligence Overview" badge="BI Protocol v1.0" />
-              <ExecutiveSummary
-                summary={latest.executive_summary}
-                protocol={latest.curation_protocol}
+              <SectionHeader icon={Activity} title="Executive Intelligence Overview" badge="BI Protocol v2.0" />
+              <ExecutiveCommandCenter
+                decision={latest.executive_decision}
+                protocol={latest.protocol}
+                kpis={latest.kpis}
               />
               <CompositeIndex
                 composite={latest.composite_index}
-                totalSignals={totalSignalsToday}
-                leadingPillarName={leadingPillarName}
+                kpis={latest.kpis}
               />
             </section>
 
@@ -304,10 +311,10 @@ export default function App() {
             )}
 
             {/* Strategic Forecast Matrix */}
-            {latest.forecast && (
+            {latest.strategic_forecast && (
               <section className="flex flex-col gap-5">
                 <SectionHeader icon={Target} title="Strategic Forecast Horizon" badge="Projections" />
-                <ForecastMatrix forecast={latest.forecast} />
+                <ForecastMatrix forecast={latest.strategic_forecast} />
               </section>
             )}
 
@@ -315,9 +322,9 @@ export default function App() {
             <section className="flex flex-col gap-5">
               <SectionHeader icon={ShieldCheck} title="Empirical Evidence & Verification Engine" badge="Verifiable" />
               <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-                {latest.breakthroughs && (
+                {latest.top_signals && (
                   <SignalFeed
-                    items={latest.breakthroughs}
+                    items={latest.top_signals}
                     pillarAccents={Object.fromEntries(Object.entries(PILLAR_META).map(([k, v]) => [k, v.accent]))}
                   />
                 )}

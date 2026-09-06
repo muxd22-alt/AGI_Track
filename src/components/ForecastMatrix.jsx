@@ -46,6 +46,12 @@ export default function ForecastMatrix({ forecast }) {
         {ROWS.map((row, i) => {
           const entry = forecast?.[row.key]
           if (!entry) return null
+          
+          // Determine impact aesthetically since the new API provides just strings
+          let autoImpact = 'Medium'
+          if (row.key === '90_days') autoImpact = 'High'
+          if (row.key === '365_days') autoImpact = 'Critical'
+
           return (
             <div
               key={row.key}
@@ -57,14 +63,14 @@ export default function ForecastMatrix({ forecast }) {
                 <span className="font-mono text-xs text-paper-500">{t(row.label)}</span>
                 <span
                   className={`whitespace-nowrap border px-2 py-1 font-mono text-[11px] sm:order-3 ${
-                    IMPACT_STYLES[entry.impact_index] ?? IMPACT_STYLES.Medium
+                    IMPACT_STYLES[autoImpact]
                   }`}
                 >
-                  {t(entry.impact_index)}
+                  {t(autoImpact)}
                 </span>
               </div>
               <p className="text-sm leading-relaxed text-paper-300">
-                {isArabic ? (translations[row.key] || entry.milestone) : entry.milestone}
+                {isArabic ? (translations[row.key] || entry) : entry}
               </p>
             </div>
           )

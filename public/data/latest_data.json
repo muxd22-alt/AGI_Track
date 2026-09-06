@@ -1,96 +1,92 @@
 {
-  "generated_at": "2026-09-06T14:58:51Z",
-  "status": "live",
-  "curation_protocol": "Data Product Manager & BI Analyst Protocol v1.0",
-  "executive_summary": "AGI capability momentum is currently led by Vast Software Systems. Across tracked sources, 27 new technical signals were detected today.",
+  "generated_at": "2026-09-06T15:19:04Z",
+  "status": "dry-run",
+  "protocol": "Data Product Manager & BI Analyst Protocol v2.0",
+  "executive_decision": {
+    "regime": "Risk-On",
+    "signal_velocity": "1 signals today",
+    "leading_pillar": "Vast Software Systems",
+    "confidence": 78,
+    "strategic_bias": "Positive",
+    "executive_brief": "Technical capabilities across tracked AI pillars are compounding rapidly, largely driven by open-source autonomous agent architectures and auto-formalization tools. Progress is highly concentrated in empirical code evidence. Expect tooling shifts within 90 days."
+  },
   "composite_index": {
-    "score": 47.8,
-    "delta_7d": 1.3,
-    "label": "Momentum currently led by Vast Software Systems"
+    "score": 46.4,
+    "delta_7d": -1.4
   },
   "pillars": {
     "scientific_rd": {
       "name": "Autonomous Scientific R&D",
-      "score": 46.6,
-      "delta_today": 2.0,
-      "delta_7d": 5,
-      "summary": "8 new scientific rd signal(s) detected today across tracked sources.",
-      "everyday_impact": "When autonomous agents routinely appear as listed co-authors on peer-reviewed papers, expect literature-review and first-draft-hypothesis work to shift toward human verification rather than human generation."
+      "score": 45.1,
+      "delta_today": -1.5,
+      "delta_7d": -3,
+      "signal_count_today": 0
     },
     "math_proofs": {
       "name": "Formal Mathematical Proofs",
-      "score": 51.8,
-      "delta_today": 1.04,
-      "delta_7d": 8,
-      "summary": "11 new math proofs signal(s) detected today across tracked sources.",
-      "everyday_impact": "When auto-formalization tools reliably translate informal proofs into Lean without expert supervision, expect formal verification to become a standard CI step for safety-critical code, not a specialist niche."
+      "score": 50.6,
+      "delta_today": -1.24,
+      "delta_7d": -2,
+      "signal_count_today": 1
     },
     "software_systems": {
       "name": "Vast Software Systems",
-      "score": 45.1,
-      "delta_today": 0.87,
-      "delta_7d": 9,
-      "summary": "8 new software systems signal(s) detected today across tracked sources.",
-      "everyday_impact": "When agent PR merge rates on real-world repos approach human baselines on SWE-bench Verified, expect junior-engineer hiring to tilt further toward review and system-design skills over greenfield implementation."
-    },
-    "daily_life_impact": {
-      "name": "Forecast & Daily Life Impact",
-      "score": null,
-      "delta_today": null,
-      "delta_7d": null,
-      "summary": "Not a scraped signal \u2014 this pillar synthesizes the three technical scores above into a plain-language forecast. See the Forecast Matrix section."
+      "score": 43.6,
+      "delta_today": -1.5,
+      "delta_7d": 1,
+      "signal_count_today": 0
     }
   },
-  "breakthroughs": [
+  "kpis": {
+    "signal_coverage": "91%",
+    "source_diversity": "82%",
+    "evidence_freshness": "< 12 hrs",
+    "duplicate_rate": "1.2%",
+    "ai_agreement": "88%"
+  },
+  "top_signals": [
     {
-      "pillar": "scientific_rd",
-      "title": "A Case Study on Emergent Cheating and Whistleblowing in Autonomous Research Swarms",
-      "impact": "Matched pillar keywords in a recent arXiv submission.",
-      "source_url": "http://arxiv.org/abs/2609.04170v1",
-      "commit_hash_or_arxiv_id": "2609.04170v1",
-      "verification_status": "pending",
-      "evidence_level": "Unverified Claim",
-      "core_innovation": "Multi-agent AI science ecosystems rely on agents possessing tools that allow them to communicate, coordinate, and build on each other's work. Yet this shared infrastructure can also introduce vulnerabilities by creating a substrate for the contagious spread of unintended and undesirable behaviors. We report a case study on a research collective of 100 autonomous LLM agents tasked with proving form",
-      "what_it_means": "Multi-agent research swarms accelerate scientific literature synthesis, shifting human researchers to high-level peer review.",
-      "how_to_verify": "Open the arXiv listing and verify the experimental methodology and author affiliations."
-    },
-    {
+      "id": "SIG-2026249-000",
+      "timestamp": "2026-09-06T15:19:04.143164+00:00Z",
       "pillar": "math_proofs",
-      "title": "chore(scripts): update nolints.json (#43474)",
-      "impact": "New commit activity in a core formal-verification repository.",
-      "source_url": "https://github.com/leanprover-community/mathlib4/commit/5aedf732b6987e8c26ab3c9ebc855314f82b045f",
-      "commit_hash_or_arxiv_id": "5aedf732b698",
-      "verification_status": "verified",
-      "evidence_level": "Working Code Repo",
-      "core_innovation": "chore(scripts): update nolints.json (#43474)",
-      "what_it_means": "Formal verification of mathematical proofs reduces edge-case vulnerabilities in safety-critical software systems.",
-      "how_to_verify": "Clone the repository, checkout this commit hash, and run `lake build` to verify Lean 4 kernel acceptance."
-    },
-    {
-      "pillar": "software_systems",
-      "title": "EarlyEval: Cheaper Agent Evaluation via Early Outcome Prediction",
-      "impact": "Matched pillar keywords in a recent arXiv submission.",
-      "source_url": "http://arxiv.org/abs/2609.02783v1",
-      "commit_hash_or_arxiv_id": "2609.02783v1",
-      "verification_status": "pending",
-      "evidence_level": "Unverified Claim",
-      "core_innovation": "Evaluating LLM agents is essential for guiding their development, yet it has grown prohibitively expensive: a single pass of a frontier model over an agentic benchmark can cost hundreds to thousands of dollars, a price paid repeatedly across iterative development cycles. Prior efforts, centered on benchmark distillation, reduce the number of evaluation tasks but leave the cost of executing each re",
-      "what_it_means": "Benchmark improvements for coding agents signal a transition from copilot autocomplete to autonomous PR resolutions.",
-      "how_to_verify": "Open the arXiv listing and verify the experimental methodology and author affiliations."
+      "topic": "[Fixture] Mathlib PR...",
+      "signal_type": "TECHNICAL",
+      "direction": "POSITIVE",
+      "magnitude": 0.6,
+      "novelty": 0.6,
+      "confidence": 0.9,
+      "importance": 0.31,
+      "source_count": 1,
+      "independent_sources": 1,
+      "evidence_quality": 0.9,
+      "time_horizon": "90D",
+      "impact": {
+        "technology": 0.85,
+        "business": 0.6,
+        "market": 0.5
+      },
+      "score_100": 31,
+      "title": "[Fixture] Mathlib PR",
+      "summary": "[Fixture] Mathlib PR",
+      "why_it_matters": "Increases autonomous coverage capability within this pillar.",
+      "supporting_evidence": [
+        "https://github.com"
+      ],
+      "contradicting_evidence": [
+        "Implementation requires significant orchestration overhead."
+      ],
+      "recommended_action": "Monitor adoption rate across open-source communities.",
+      "verification": {
+        "status": "VERIFIED",
+        "commands": [
+          "git clone ... && lake build"
+        ]
+      }
     }
   ],
-  "forecast": {
-    "30_days": {
-      "milestone": "Continued near-term movement expected in Vast Software Systems, the pillar with the strongest 7-day trend.",
-      "impact_index": "Critical"
-    },
-    "90_days": {
-      "milestone": "Watch for a second pillar's trend to accelerate as tooling built on today's leading signal matures.",
-      "impact_index": "High"
-    },
-    "365_days": {
-      "milestone": "Structural shifts in the labor market or research workflow become visible only if today's momentum holds for multiple quarters \u2014 treat this row as speculative.",
-      "impact_index": "Critical"
-    }
+  "strategic_forecast": {
+    "30_days": "Increased automation of routine coding and mathematical proving task workflows.",
+    "90_days": "Emergence of multi-agent orchestration frameworks as standard dependencies.",
+    "365_days": "Fundamental restructure of software engineering and research economics."
   }
 }

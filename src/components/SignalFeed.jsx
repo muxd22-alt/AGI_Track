@@ -15,19 +15,19 @@ const VERIFICATION_STYLES = {
 
 function SignalItem({ item, accent }) {
   const { t, isArabic, translateDynamic } = useI18n()
-  const [trInnovation, setTrInnovation] = useState(null)
-  const [trMeans, setTrMeans] = useState(null)
-  const [trVerify, setTrVerify] = useState(null)
+  const [trWhy, setTrWhy] = useState(null)
+  const [trAction, setTrAction] = useState(null)
+  const [trTopic, setTrTopic] = useState(null)
 
   useEffect(() => {
     if (isArabic) {
-      if (item.core_innovation) translateDynamic(item.core_innovation).then(setTrInnovation)
-      if (item.what_it_means) translateDynamic(item.what_it_means).then(setTrMeans)
-      if (item.how_to_verify) translateDynamic(item.how_to_verify).then(setTrVerify)
+      if (item.topic) translateDynamic(item.topic).then(setTrTopic)
+      if (item.analysis?.why_it_matters) translateDynamic(item.analysis.why_it_matters).then(setTrWhy)
+      if (item.analysis?.recommended_action) translateDynamic(item.analysis.recommended_action).then(setTrAction)
     }
   }, [isArabic, item, translateDynamic])
 
-  const verification = VERIFICATION_STYLES[item.verification_status] ?? VERIFICATION_STYLES.pending
+  const verification = VERIFICATION_STYLES[item.verification_status?.toLowerCase()] ?? VERIFICATION_STYLES.pending
   const VerificationIcon = verification.icon
 
   return (
@@ -40,7 +40,7 @@ function SignalItem({ item, accent }) {
           {t(PILLAR_LABELS[item.pillar] ?? item.pillar)}
         </span>
         <span className="border border-graphite-700 px-1.5 py-0.5 font-mono text-[10px] text-paper-500">
-          {t(item.evidence_level)}
+          {t(item.signal_type || 'TECHNICAL')}
         </span>
         <span className={`flex items-center gap-1 border px-1.5 py-0.5 font-mono text-[10px] ${verification.className}`}>
           <VerificationIcon size={11} />
@@ -48,35 +48,36 @@ function SignalItem({ item, accent }) {
         </span>
       </div>
 
-      <h4 className="mt-2.5 text-sm font-medium text-paper-100">{item.title}</h4>
-      <p className="mt-1 text-sm leading-relaxed text-paper-300">
-        {isArabic ? (trInnovation || item.core_innovation) : item.core_innovation}
-      </p>
+      <h4 className="mt-2.5 text-sm font-medium text-paper-100">
+        {isArabic ? (trTopic || item.topic) : item.topic}
+      </h4>
 
-      <dl className="mt-3 grid gap-2.5 sm:grid-cols-2">
+      <dl className="mt-4 grid gap-4 sm:grid-cols-2">
         <div>
-          <dt className="font-mono text-[10px] uppercase tracking-wide text-paper-500">{t('Human impact')}</dt>
+          <dt className="font-mono text-[10px] uppercase tracking-wide text-paper-500">{t('Why It Matters')}</dt>
           <dd className="mt-1 text-sm text-paper-300">
-            {isArabic ? (trMeans || item.what_it_means) : item.what_it_means}
+            {isArabic ? (trWhy || item.analysis?.why_it_matters) : item.analysis?.why_it_matters}
           </dd>
         </div>
         <div>
-          <dt className="font-mono text-[10px] uppercase tracking-wide text-paper-500">{t('How to verify')}</dt>
+          <dt className="font-mono text-[10px] uppercase tracking-wide text-paper-500">{t('Recommended Action')}</dt>
           <dd className="mt-1 text-sm text-paper-300">
-            {isArabic ? (trVerify || item.how_to_verify) : item.how_to_verify}
+            {isArabic ? (trAction || item.analysis?.recommended_action) : item.analysis?.recommended_action}
           </dd>
         </div>
       </dl>
 
-      <a
-        href={item.source_url}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-paper-500 hover:text-signal-cyan"
-      >
-        {item.source_url}
-        <ExternalLink size={11} />
-      </a>
+      {item.supporting_evidence?.[0] && (
+        <a
+          href={item.supporting_evidence[0].split(' ')[0]} // Get just the URL part
+          target="_blank"
+          rel="noreferrer"
+          className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-paper-500 hover:text-signal-cyan"
+        >
+          {t('View Source')}
+          <ExternalLink size={11} />
+        </a>
+      )}
     </div>
   )
 }

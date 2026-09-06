@@ -55,9 +55,6 @@ const AR = {
   'Copied': 'تم النسخ',
   'Build a Lean 4 / Mathlib proof locally': 'بناء برهان Lean 4 / Mathlib محلياً',
   "Pull an arXiv paper's raw metadata": 'سحب بيانات ورقة arXiv الخام',
-  "Check a repo's recent commit activity": 'فحص نشاط الإيداعات الأخيرة في مستودع',
-  'Run the SWE-bench evaluation harness': 'تشغيل إطار تقييم SWE-bench',
-
   // Executive Summary & BI Badges
   'Executive Summary': 'الملخص التنفيذي',
   'Curation Protocol': 'بروتوكول التنسيق',
@@ -66,10 +63,35 @@ const AR = {
   'Momentum & 90-Day Trajectory': 'الزخم ومسار الـ ٩٠ يوماً',
   'Strategic Forecast Horizon': 'أُفق التوقعات الاستراتيجية',
   'Empirical Evidence & Verification Engine': 'محرّك الأدلة التجريبية والتحقق',
-  'Total Daily Signals': 'إجمالي الإشارات اليومية',
+  
+  // Executive Engine
+  'Market / Intelligence Regime': 'حالة الاستخبارات والسوق',
+  'Signal Velocity': 'سرعة الإشارات',
   'Leading Pillar': 'المحور المتصدر',
-  'Data Confidence': 'درجة موثوقية البيانات',
-  'High (Source-Grounded)': 'عالية (مُوثّقة بالكامل)',
+  'Confidence': 'درجة الثقة',
+  'Strategic Bias': 'التحيز الاستراتيجي',
+  'Executive Brief': 'الموجز التنفيذي',
+  'Data Product Quality KPIs': 'مؤشرات أداء جودة البيانات',
+
+  // KPIs
+  'Signal Coverage': 'تغطية الإشارات',
+  'Source Diversity': 'تنوع المصادر',
+  'Evidence Freshness': 'حداثة الأدلة',
+  'Duplicate Rate': 'معدل التكرار',
+  'AI Agreement': 'توافق الذكاء الاصطناعي',
+
+  // Signal Objects
+  'Signal Score': 'تقييم الإشارة',
+  'Novelty': 'الحداثة',
+  'Quality': 'الجودة',
+  'Importance': 'الأهمية',
+  'Supporting Evidence': 'الأدلة الداعمة',
+  'Contradicting Evidence': 'الأدلة المضادة',
+  'Why It Matters': 'لماذا يهم؟',
+  'Recommended Action': 'الإجراء الموصى به',
+  'Verified': 'مُحقق',
+  'Partial': 'جزئي',
+  'Unverified Claim': 'ادعاء لم يُتحقق منه',
 
   // Footer
   'Data sources: GitHub REST API, Hugging Face Daily Papers, and the arXiv API. Every score and breakthrough on this page links back to a primary source — treat unlinked claims as unverified.': 'مصادر البيانات: واجهة GitHub، أوراق Hugging Face اليومية، وواجهة arXiv. كل درجة واكتشاف في هذه الصفحة مرتبط بمصدره الأصلي.',
@@ -78,7 +100,6 @@ const AR = {
   // General
   'Unweighted average of the three tracked pillars below, each scored 0–100 against its own historical baseline. A heuristic momentum gauge, not a forecast of arrival.': 'المتوسط غير المرجح للمحاور الثلاثة المرصودة أدناه، حيث تسجل كل منها درجة من ٠ إلى ١٠٠ مقارنة بخط الأساس التاريخي الخاص بها. مقياس زخم استدلالي، وليس تنبؤاً بالوصول.',
   'Working Code Repo': 'مستودع كود عامل',
-  'Unverified Claim': 'ادعاء لم يُتحقق منه',
 }
 
 // MyMemory free translation API for dynamic scraper-generated content
