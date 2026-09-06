@@ -1,0 +1,95 @@
+{
+  "generated_at": "2026-09-02T00:00:00Z",
+  "status": "demo",
+  "note": "This file ships with illustrative placeholder values so the UI is fully browsable via `npm run dev` before the scraper has run. Every item marked '[Example]' is invented for layout purposes — it is replaced wholesale the first time .github/workflows/daily-update.yml runs data/scraper.py.",
+  "composite_index": {
+    "score": 34.2,
+    "delta_7d": 1.8,
+    "label": "Early capability convergence"
+  },
+  "pillars": {
+    "scientific_rd": {
+      "name": "Autonomous Scientific R&D",
+      "score": 28.6,
+      "delta_today": 0.4,
+      "delta_7d": 2.1,
+      "summary": "[Example] Placeholder summary — the live scraper fills this with a one-line synthesis of the day's strongest arXiv/Hugging Face signal for this pillar.",
+      "everyday_impact": "[Example] When autonomous agents routinely appear as listed co-authors on peer-reviewed papers, expect literature-review and first-draft-hypothesis work to shift toward human verification rather than human generation."
+    },
+    "math_proofs": {
+      "name": "Formal Mathematical Proofs",
+      "score": 41.3,
+      "delta_today": 0.6,
+      "delta_7d": 3.4,
+      "summary": "[Example] Placeholder summary — the live scraper fills this with a one-line synthesis of Mathlib4 / theorem-prover commit activity.",
+      "everyday_impact": "[Example] When auto-formalization tools reliably translate informal proofs into Lean without expert supervision, expect formal verification to become a standard CI step for safety-critical code, not a specialist niche."
+    },
+    "software_systems": {
+      "name": "Vast Software Systems",
+      "score": 37.0,
+      "delta_today": -0.2,
+      "delta_7d": 1.0,
+      "summary": "[Example] Placeholder summary — the live scraper fills this with a one-line synthesis of SWE-bench and autonomous-agent PR activity.",
+      "everyday_impact": "[Example] When agent PR merge rates on real-world repos approach human baselines on SWE-bench Verified, expect junior-engineer hiring to tilt further toward review and system-design skills over greenfield implementation."
+    },
+    "daily_life_impact": {
+      "name": "Forecast & Daily Life Impact",
+      "score": null,
+      "delta_today": null,
+      "delta_7d": null,
+      "summary": "Not a scraped signal — this pillar synthesizes the three technical scores above into a plain-language forecast. See the Forecast Matrix section."
+    }
+  },
+  "breakthroughs": [
+    {
+      "pillar": "scientific_rd",
+      "title": "[Example] Preprint lists an autonomous research agent as a contributing author",
+      "impact": "Illustrates the item shape the scraper produces once wired to the arXiv and Hugging Face Daily Papers APIs.",
+      "source_url": "https://arxiv.org/list/cs.AI/recent",
+      "commit_hash_or_arxiv_id": "arXiv:0000.00000 (placeholder)",
+      "verification_status": "pending",
+      "evidence_level": "Unverified Claim",
+      "core_innovation": "Placeholder — replace with a concise, factual description of what actually changed, written from the primary source.",
+      "what_it_means": "Placeholder — replace with the implication for researchers or engineers, kept to one or two sentences.",
+      "how_to_verify": "Open the arXiv listing above and check the paper's author list and methods section for the agent's actual contribution."
+    },
+    {
+      "pillar": "math_proofs",
+      "title": "[Example] Elevated commit velocity in a formal-verification repository",
+      "impact": "Illustrates the item shape the scraper produces once wired to GitHub commit activity for Lean 4 / Mathlib.",
+      "source_url": "https://github.com/leanprover-community/mathlib4/commits/master",
+      "commit_hash_or_arxiv_id": "commit sha (placeholder)",
+      "verification_status": "verified",
+      "evidence_level": "Working Code Repo",
+      "core_innovation": "Placeholder — replace with what the commits actually add or prove.",
+      "what_it_means": "Placeholder — replace with the implication for the formalization community.",
+      "how_to_verify": "Clone the repo, checkout the referenced commit, and run `lake build` to confirm the kernel accepts the new proofs."
+    },
+    {
+      "pillar": "software_systems",
+      "title": "[Example] Leaderboard movement on a software-engineering benchmark",
+      "impact": "Illustrates the item shape the scraper produces once wired to public leaderboard and GitHub topic data.",
+      "source_url": "https://www.swebench.com/",
+      "commit_hash_or_arxiv_id": "n/a (placeholder)",
+      "verification_status": "pending",
+      "evidence_level": "Verified Weights",
+      "core_innovation": "Placeholder — replace with the actual score change and what changed in the submitted system.",
+      "what_it_means": "Placeholder — replace with the implication for engineering teams and hiring.",
+      "how_to_verify": "Cross-check the submission against the benchmark's public leaderboard and run its evaluation harness if released."
+    }
+  ],
+  "forecast": {
+    "30_days": {
+      "milestone": "[Example] Placeholder near-term milestone — the scraper/forecast step should fill this from the last 30 days of momentum.",
+      "impact_index": "Medium"
+    },
+    "90_days": {
+      "milestone": "[Example] Placeholder mid-term milestone — filled from the last 90 days of trend data shown in the heatmap below.",
+      "impact_index": "High"
+    },
+    "365_days": {
+      "milestone": "[Example] Placeholder long-term milestone — a structural forecast, not a scraped fact, so keep it clearly labeled as speculative in the UI.",
+      "impact_index": "Critical"
+    }
+  }
+}
